@@ -12,8 +12,8 @@
 #include <sstream>
 
 
-int range = 255;
-int pin = 12;
+int range = 100;
+int pin = 12; // pin del pwm
 int pwm;
 
 void callback(const geometry_msgs::Twist::ConstPtr & msg)
@@ -25,7 +25,7 @@ void callback(const geometry_msgs::Twist::ConstPtr & msg)
 	pwm=pwm+vel;
 
 	if (pwm>=range){
-		pwm=255;
+		pwm=100;
 	}
 	else if (pwm<=0){
 		pwm=0;

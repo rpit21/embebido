@@ -198,6 +198,10 @@ add_executable(subs_teleop src/subs_telop.cpp)
 add_dependencies(subs_teleop ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
 target_link_libraries(subs_teleop ${catkin_LIBRARIES} -lwiringPi)
 
+add_executable(pins_read src/pins_read.cpp)
+add_dependencies(pins_read ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
+target_link_libraries(pins_read ${catkin_LIBRARIES} -lwiringPi)
+
 #############
 ## Testing ##
 #############
