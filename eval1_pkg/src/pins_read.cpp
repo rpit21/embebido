@@ -6,13 +6,13 @@
 
 int main (int argc, char **argv)
 {
-	int sw = 9;  //switch pin
-	int pul= 3; // pulsador pin
+	int sw = 17;  //switch pin
+	int pul= 27; // pulsador pin
 
     ros::init(argc, argv, "gpio_read_publisher");
     ros::NodeHandle nh;
-    ros::Publisher sw_status = nh.advertise<std_msgs::Int32>("/status",10);
-    ros::Publisher pul_status = nh.advertise<std_msgs::Int32>("/pm",10);
+    ros::Publisher sw_status = nh.advertise<std_msgs::Int32>("/sw",10);
+    ros::Publisher pul_status = nh.advertise<std_msgs::Int32>("/pul",10);
 
     wiringPiSetupGpio();
     pinMode(sw, INPUT);
