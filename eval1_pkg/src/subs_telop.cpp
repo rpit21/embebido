@@ -48,21 +48,21 @@ void callback(const geometry_msgs::Twist::ConstPtr & msg)
 		}
 	}
 
-	if (pwm=20){
+	if (pwm==20){
 		digitalWrite(LED1, HIGH);
 		digitalWrite(LED2, LOW);
 		digitalWrite(LED3, LOW);
 		digitalWrite(LED4, LOW);
 		digitalWrite(LED5, LOW);
 
-	}else if (pwm=40){
+	}else if (pwm==40){
 		digitalWrite(LED1, HIGH);
 		digitalWrite(LED2, HIGH);
 		digitalWrite(LED3, LOW);
 		digitalWrite(LED4, LOW);
 		digitalWrite(LED5, LOW);
 
-	}else if (pwm=60){
+	}else if (pwm==60){
 		digitalWrite(LED1, HIGH);
 		digitalWrite(LED2, HIGH);
 		digitalWrite(LED3, HIGH);
@@ -70,7 +70,7 @@ void callback(const geometry_msgs::Twist::ConstPtr & msg)
 		digitalWrite(LED5, LOW);
 
 
-	}else if (pwm=80){
+	}else if (pwm==80){
 		digitalWrite(LED1, HIGH);
 		digitalWrite(LED2, HIGH);
 		digitalWrite(LED3, HIGH);
