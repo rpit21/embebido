@@ -18,8 +18,8 @@ int pwm;
 int sentido;
 int stop;
 
-#define IN1 3 // change pin number here
-#define IN2 4 // change pin number here
+#define IN1 3 // Pin In1
+#define IN2 4 // Pin In2
 
 #define LED1 0
 #define LED2 5
@@ -27,26 +27,7 @@ int stop;
 #define LED4 13
 #define LED5 19
 
-void callback(const geometry_msgs::Twist::ConstPtr & msg)
-{
-
-	int vel = msg->linear.x;
-
-	vel=10*vel;
-	pwm=pwm+vel;
-
-	if (stop==1){
-		pwm=0;
-
-	} else {
-
-		if (pwm>=range){
-			pwm=100;
-		}
-		else if (pwm<=0){
-			pwm=0;
-		}
-	}
+void leds_indicador(){
 
 	if (pwm==20){
 		digitalWrite(LED1, HIGH);
@@ -92,6 +73,25 @@ void callback(const geometry_msgs::Twist::ConstPtr & msg)
 		digitalWrite(LED5, LOW);
 	}
 
+}
+
+void callback(const geometry_msgs::Twist::ConstPtr & msg)
+{
+
+	int vel = msg->linear.x;
+
+	vel=10*vel;
+	pwm=pwm+vel;
+
+	if (pwm>=range){
+		pwm=100;
+	}
+	else if (pwm<=0){
+		pwm=0;
+	}
+
+	leds_indicador();
+
 	softPwmWrite(pin,pwm);
 
 	std::cout<<"pwm set in "<<pwm<<"\n";
@@ -115,19 +115,26 @@ void callback_sentido (const std_msgs::Int32::ConstPtr & msg){
 
 void callback_parada (const std_msgs::Int32::ConstPtr & msg){
 	stop=msg->data;
+
+	if (stop==1){
+		pwm=0;
+	}
+
 }
 
 
 int main(int argc, char **argv)
 
 {
+	//Inicio de Ros
 	ros::init(argc, argv,"subs_teleop");
 
 	//Created a nodehandle object
 
 	ros::NodeHandle node_obj;
 
-	//crear suscriber
+	//Crear subscriber para cada GPIO
+
 	ros::Subscriber teleop_subscriber = node_obj.subscribe("/turtle1/cmd_vel",10,callback);
 
 	ros::Subscriber sentido_subs = node_obj.subscribe("/sw",10,callback_sentido);
@@ -135,7 +142,7 @@ int main(int argc, char **argv)
 	ros::Subscriber parada_subs = node_obj.subscribe("/pul",10,callback_parada);
 
 
-	//configuracion de pines como salida
+	//Configuracion de pines
 
 	wiringPiSetupGpio();
 	ROS_INFO("GPIO has been set as OUTPUT.");
@@ -150,11 +157,13 @@ int main(int argc, char **argv)
 	pinMode(LED4, OUTPUT);
 	pinMode(LED5, OUTPUT);
 
-	// inicializamos al pin como pwm con un rango
+	// inicializamos al pin como pwm con un rango en este de 100
 	softPwmCreate(pin,0,range);
 
 	//Spinning the node
+
 	ros::spin();
+
 	return 0;
 }
 

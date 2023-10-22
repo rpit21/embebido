@@ -18,8 +18,8 @@ int main (int argc, char **argv)
     pinMode(sw, INPUT);
     pinMode(pul, INPUT);
 
-    std::cout<<"Pin "<<sw<<" Set as INPUT"<<"\n";
-    std::cout<<"Pin "<<pul<<" Set as INPUT"<<"\n";
+    std::cout<<"Pin SW "<<sw<<" Set as INPUT"<<"\n";
+    std::cout<<"Pin BOT"<<pul<<" Set as INPUT"<<"\n";
 
     ros::Rate loop_rate(3);
 
