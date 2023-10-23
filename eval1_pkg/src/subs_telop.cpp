@@ -83,12 +83,20 @@ void callback(const geometry_msgs::Twist::ConstPtr & msg)
 	vel=10*vel;
 	pwm=pwm+vel;
 
-	if (pwm>=range){
-		pwm=100;
+	if (stop==1){
+			pwm=0;
+	}else{
+
+		if (pwm>=range){
+				pwm=100;
+		}
+		else if (pwm<=0){
+			pwm=0;
+		}
+
 	}
-	else if (pwm<=0){
-		pwm=0;
-	}
+
+
 
 	leds_indicador();
 
