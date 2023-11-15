@@ -80,6 +80,11 @@ void calculate_RPM(){
 		velocidades.y=rpm_D;
 
 		encoders_pub.publish(velocidades);
+		
+		std::cout<<"\tVelocidades de cada Motor"<<"\n";
+		std::cout<<" RPM motor Izquierdo:"<<rpm_I<<"\n";
+		std::cout<<" RPM motor Derecho:"<<rpm_D<<"\n";
+		std::cout<<"---------------------------------------------------"<<"\n";
 
 
 		//Actualizamos variable de tiempo pasado, y e inicializamos el conteo de los pulsadores

@@ -14,7 +14,7 @@
     
     
     <!--Node lectura encoders-->
-    <node pkg="plataforma_mov_pkg" type="encoder" name="encoders"/>
+    <node pkg="plataforma_mov_pkg" type="encoder" name="encoders" output="screen"/>
     
    <!--Node para de mpu-->
     

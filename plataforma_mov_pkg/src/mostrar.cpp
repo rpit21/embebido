@@ -35,7 +35,7 @@ void imu_callback(const sensor_msgs::Imu::ConstPtr & msg)
 	std::cout<<" X:"<<Ac_L_x<<"\n";
 	std::cout<<" Y:"<<Ac_L_y<<"\n";
 	std::cout<<" Z:"<<Ac_L_z<<"\n";
-	std::cout<<"\tAceleraciones angulares:"<<"\n";
+	std::cout<<"\tVelocidades angulares:"<<"\n";
 	std::cout<<" X:"<<Ac_An_x<<"\n";
 	std::cout<<" Y:"<<Ac_An_y<<"\n";
 	std::cout<<" Z:"<<Ac_An_z<<"\n";

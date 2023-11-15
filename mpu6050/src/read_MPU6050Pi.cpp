@@ -87,7 +87,7 @@ int main (int argc, char **argv)
 		       std::cout << "\r";
 		   }
 
-    }
+    
 
     return 0;
 }
