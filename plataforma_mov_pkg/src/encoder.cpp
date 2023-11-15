@@ -7,6 +7,7 @@
 #include <wiringPi.h>
 #include <geometry_msgs/Vector3.h>
 
+
 // Pines fisicos encoder Izquierdo
 int I_pinA=26;
 int I_pinB=24;

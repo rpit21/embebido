@@ -52,6 +52,10 @@ add_executable(motors src/Motors.cpp)
 add_dependencies(motors ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
 target_link_libraries(motors ${catkin_LIBRARIES} -lwiringPi)
 
+add_executable(mostrar src/mostrar.cpp)
+add_dependencies(mostrar ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
+target_link_libraries(mostrar ${catkin_LIBRARIES} -lwiringPi)
+
 #############
 ## Testing ##
 #############
