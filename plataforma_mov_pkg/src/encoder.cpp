@@ -7,13 +7,13 @@
 #include <wiringPi.h>
 #include <geometry_msgs/Vector3.h>
 
-// Pines encoder Izquierdo
-int I_pinA=7;
-int I_pinB=8;
+// Pines fisicos encoder Izquierdo
+int I_pinA=26;
+int I_pinB=24;
 
-//Pines encoder Derecho
-int D_pinA=23;
-int D_pinB=24;
+//Pines fisicos encoder Derecho
+int D_pinA=16;
+int D_pinB=18;
 
 int PPR=11; // resolucion del enconder, 1 vuelta -> 11 pulsos
 
@@ -93,7 +93,8 @@ int main (int argc, char **argv)
     encoders_pub= nh.advertise<geometry_msgs::Vector3>("/rpm",10); // configuramos el publisher
 
     //Inicializacion de la libreria wiring PI
-    wiringPiSetup();
+    //wiringPiSetup();
+    wiringPiSetupPhys(); // inicializa con pines fisicos
 
     // definir entradas para pines de encoder Izquierdo
     pinMode(I_pinA,INPUT);
@@ -104,7 +105,7 @@ int main (int argc, char **argv)
     pinMode(D_pinB,INPUT);
 
     wiringPiISR(I_pinA,INT_EDGE_RISING , &handleEncoder); // Interrupcion para cambios en el pin A encoder Izquiero
-    //wiringPiISR(D_pinA,INT_EDGE_RISING , &handleEncoder2); // Interrupcion para cambios en el pin A encoder Derecho
+    wiringPiISR(D_pinA,INT_EDGE_RISING , &handleEncoder2); // Interrupcion para cambios en el pin A encoder Derecho
 
     while(ros::ok()){
 
