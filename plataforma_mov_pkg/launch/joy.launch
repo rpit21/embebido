@@ -8,9 +8,16 @@
     <!-- Joy control Carro Node-->  
     <node pkg="plataforma_mov_pkg" type="joy_car" name="joy"/>
     
+    
     <!-- Control de motores Node-->
     <node pkg="plataforma_mov_pkg" type="motors" name="motores"/>
     
+    
+    <!--Node lectura encoders-->
+    <node pkg="plataforma_mov_pkg" type="encoder" name="encoders"/>
+    
+    
+    <!--Node visualizacion de datos -->
 
    
    
