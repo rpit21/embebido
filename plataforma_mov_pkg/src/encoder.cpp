@@ -15,7 +15,7 @@ int I_pinB=24;
 int D_pinA=16;
 int D_pinB=18;
 
-int PPR=11; // resolucion del enconder, 1 vuelta -> 11 pulsos
+int PPR=11.0; // resolucion del enconder, 1 vuelta -> 11 pulsos
 
 volatile long tiempo_pas=0;
 volatile int pulse_count_encI=0; // conteo de pulsos encoder izquierdo
@@ -33,11 +33,11 @@ void handleEncoder(){
 
 	if (stateA_I==1 & stateB_I==1){
 		pulse_count_encI++;
-		std::cout<<"Motor I: Antihorario \n"<<std::endl;
+		std::cout<<"Motores: Horario \n"<<std::endl;
 	}
 	else if (stateA_I==1 & stateB_I==0){
 		pulse_count_encI--;
-		std::cout<<"Motor I: Horario \n"<<std::endl;
+		std::cout<<"Motores: Antihorario \n"<<std::endl;
 	}
 
 }
@@ -49,14 +49,20 @@ void handleEncoder2(){
 
 	if (stateA_D==1 & stateB_D==1){
 		pulse_count_encD++;
-		std::cout<<"Motor D: Antihorario \n"<<std::endl;
+		std::cout<<"Motor D: Horario \n"<<std::endl;
 	}
 	else if (stateA_D==1 & stateB_D==0){
 		pulse_count_encD--;
-		std::cout<<"Motor D: Horario \n"<<std::endl;
+		std::cout<<"Motor D: AntiHorario \n"<<std::endl;
 	}
 
 }
+
+void provisional_handleEncoder2 (){
+	int stateB_D= digitalRead(D_pinB);
+	pulse_count_encD++;
+	
+	}
 
 void calculate_RPM(){
 	auto tiempo_act= std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
@@ -64,8 +70,8 @@ void calculate_RPM(){
 	// condicion para procesar la cantidad de pulsos tomados en 1seg y convertirlo en rpm
 	if ((tiempo_act-tiempo_pas)>=1000){
 
-		float rpm_I=pulse_count_encI*(60/(PPR*34)); // rpm tomando en cuenta una caja de reduccion 1:34 Encoder Derecho
-		float rpm_D=pulse_count_encD*(60/(PPR*34)); // rpm tomando en cuenta una caja de reduccion 1:34 Encoder Izquierdo
+		float rpm_I=pulse_count_encI*(60.0/(PPR*34.0));// rpm tomando en cuenta una caja de reduccion 1:34 Encoder Derecho
+		float rpm_D=pulse_count_encD*(60.0/(PPR*34.0));// rpm tomando en cuenta una caja de reduccion 1:34 Encoder Izquierdo
 
 		//publicacion el mensaje al topico
 		geometry_msgs::Vector3 velocidades;
@@ -105,7 +111,8 @@ int main (int argc, char **argv)
     pinMode(D_pinB,INPUT);
 
     wiringPiISR(I_pinA,INT_EDGE_RISING , &handleEncoder); // Interrupcion para cambios en el pin A encoder Izquiero
-    wiringPiISR(D_pinA,INT_EDGE_RISING , &handleEncoder2); // Interrupcion para cambios en el pin A encoder Derecho
+    //wiringPiISR(D_pinA,INT_EDGE_RISING , &handleEncoder2); // Interrupcion para cambios en el pin A encoder Derecho
+    wiringPiISR(D_pinB,INT_EDGE_RISING , &provisional_handleEncoder2); // interrupcion provisional por error en el encoder
 
     while(ros::ok()){
 
