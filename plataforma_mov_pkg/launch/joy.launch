@@ -10,6 +10,8 @@
     
     <!-- Control de motores Node-->
     <node pkg="plataforma_mov_pkg" type="motors" name="motores"/>
+    
+
    
    
 

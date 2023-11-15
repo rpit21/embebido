@@ -33,11 +33,11 @@ void handleEncoder(){
 
 	if (stateA_I==1 & stateB_I==1){
 		pulse_count_encI++;
-		std::cout<<"Motor I: Antihorario \n";
+		std::cout<<"Motor I: Antihorario \n"<<std::endl;
 	}
 	else if (stateA_I==1 & stateB_I==0){
 		pulse_count_encI--;
-		std::cout<<"Motor I: Horario \n";
+		std::cout<<"Motor I: Horario \n"<<std::endl;
 	}
 
 }
@@ -49,11 +49,11 @@ void handleEncoder2(){
 
 	if (stateA_D==1 & stateB_D==1){
 		pulse_count_encD++;
-		std::cout<<"Motor D: Antihorario \n";
+		std::cout<<"Motor D: Antihorario \n"<<std::endl;
 	}
 	else if (stateA_D==1 & stateB_D==0){
 		pulse_count_encD--;
-		std::cout<<"Motor D: Horario \n";
+		std::cout<<"Motor D: Horario \n"<<std::endl;
 	}
 
 }
@@ -86,7 +86,7 @@ void calculate_RPM(){
 int main (int argc, char **argv)
 {
 
-	ros::init(argc, argv, "encoders");
+    ros::init(argc, argv, "encoders");
     ros::NodeHandle nh;
 
 
@@ -104,7 +104,7 @@ int main (int argc, char **argv)
     pinMode(D_pinB,INPUT);
 
     wiringPiISR(I_pinA,INT_EDGE_RISING , &handleEncoder); // Interrupcion para cambios en el pin A encoder Izquiero
-    wiringPiISR(D_pinA,INT_EDGE_RISING , &handleEncoder2); // Interrupcion para cambios en el pin A encoder Derecho
+    //wiringPiISR(D_pinA,INT_EDGE_RISING , &handleEncoder2); // Interrupcion para cambios en el pin A encoder Derecho
 
     while(ros::ok()){
 

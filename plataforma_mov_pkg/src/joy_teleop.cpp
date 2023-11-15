@@ -8,7 +8,7 @@ ros::Publisher vel_pub;
 void joyCallback(const sensor_msgs::Joy::ConstPtr& joy){
   geometry_msgs::Twist twist;
 
-  twist.angular.z = 255*joy->axes[2];
+  twist.angular.z = 255*joy->axes[3];
   twist.linear.x = 255*joy->axes[1];
 
   vel_pub.publish(twist);
