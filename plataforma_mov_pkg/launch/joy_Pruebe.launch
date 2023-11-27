@@ -5,8 +5,14 @@
     <param name = "joy_node/dev"     value = "/dev/input/js0"/>
     <node pkg="joy" type="joy_node" name="jn"/>
     
+    <!-- Joy control Carro Node-->  
+    <node pkg="plataforma_mov_pkg" type="joy_car" name="joy"/>
     
-    <!-- Encoder Node-->
+    
+    <!-- motor Node-->
+    <node pkg="plataforma_mov_pkg" type="motors" name="motores" output="screen"/>
+    
+     <!--Node lectura encoders-->
     <node pkg="plataforma_mov_pkg" type="encoder" name="encoders" output="screen"/>
    
    

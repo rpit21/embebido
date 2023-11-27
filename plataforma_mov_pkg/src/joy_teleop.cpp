@@ -21,7 +21,7 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "teleop_car");
   ros::NodeHandle  nh;
   ros::Subscriber sub = nh.subscribe("joy",10,joyCallback);
-  vel_pub =nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
+  vel_pub =nh.advertise<geometry_msgs::Twist>("/voltaje", 10);
 
   ros::spin();
 }

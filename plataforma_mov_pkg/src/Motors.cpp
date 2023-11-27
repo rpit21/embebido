@@ -5,6 +5,7 @@
 
 #include "ros/ros.h"
 #include "geometry_msgs/Twist.h"
+#include <cmath>
 #include <wiringPi.h>
 #include <softPwm.h>
 #include <iostream>
@@ -38,8 +39,15 @@ int L;
 void callback(const geometry_msgs::Twist::ConstPtr & msg)
 {
 
+	
 	float v = msg->linear.x;
 	float w = msg->angular.z;
+	
+	
+	
+	//transformacion de volaje a 255
+	//v=v*(13.78);
+	//w=w*(13.78);
 
 
 	//ecuacion que describe el movimiento del carro
@@ -75,8 +83,8 @@ void callback(const geometry_msgs::Twist::ConstPtr & msg)
 	softPwmWrite(MI_ENA,abs(VL));
 
 
-	std::cout<<"pwm MD set in "<<VR<<"\n";
-	std::cout<<"pwm MI set in "<<VL<<"\n";
+	std::cout<<"pwm MD set in "<<VL<<"\n";
+	std::cout<<"pwm MI set in "<<VR<<"\n";
 }
 
 
@@ -92,7 +100,7 @@ int main(int argc, char **argv)
 
 	//Crear subscriber para cada GPIO
 
-	ros::Subscriber teleop_subscriber = node_obj.subscribe("/cmd_vel",10,callback);
+	ros::Subscriber teleop_subscriber = node_obj.subscribe("/voltaje",10,callback);
 
 
 	//Configuracion de pines

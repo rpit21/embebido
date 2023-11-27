@@ -6,6 +6,7 @@
 #include <chrono>
 #include <wiringPi.h>
 #include <geometry_msgs/Vector3.h>
+#include "std_msgs/Float32.h"
 
 
 // Pines fisicos encoder Izquierdo
@@ -23,7 +24,8 @@ volatile int pulse_count_encI=0; // conteo de pulsos encoder izquierdo
 volatile int pulse_count_encD=0; // conteo de pulsos encoder derecho
 
 
-ros::Publisher encoders_pub;
+ros::Publisher enc_MD_pub;
+ros::Publisher enc_MI_pub;
 
 
 
@@ -65,25 +67,39 @@ void provisional_handleEncoder2 (){
 	
 	}
 
+void provisional_handleEncoder (){
+	int stateB_I= digitalRead(D_pinB);
+	pulse_count_encI++;
+	
+	}
+
 void calculate_RPM(){
 	auto tiempo_act= std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
 	// condicion para procesar la cantidad de pulsos tomados en 1seg y convertirlo en rpm
-	if ((tiempo_act-tiempo_pas)>=1000){
+	if ((tiempo_act-tiempo_pas)>=31){
 
-		float rpm_I=pulse_count_encI*(60.0/(PPR*34.0));// rpm tomando en cuenta una caja de reduccion 1:34 Encoder Derecho
-		float rpm_D=pulse_count_encD*(60.0/(PPR*34.0));// rpm tomando en cuenta una caja de reduccion 1:34 Encoder Izquierdo
+		//float rpm_I=pulse_count_encI*(60.0/(PPR*34.0));// rpm tomando en cuenta una caja de reduccion 1:34 Encoder Derecho
+		//float rpm_D=pulse_count_encD*(60.0/(PPR*34.0));// rpm tomando en cuenta una caja de reduccion 1:34 Encoder Izquierdo
+		
+		float rpm_I=pulse_count_encI*(1920.0/(PPR*20.74));// rpm tomando en cuenta una caja de reduccion 1:34 Encoder Derecho
+		float rpm_D=pulse_count_encD*(1920.0/(PPR*20.74));// rpm tomando en cuenta una caja de reduccion 1:34 Encoder Izquierdo
+		
+		float radS_I= rpm_I*3.1415/30;
+		float radS_D= rpm_D*3.1415/30;
 
 		//publicacion el mensaje al topico
-		geometry_msgs::Vector3 velocidades;
-		velocidades.x=rpm_I;
-		velocidades.y=rpm_D;
+		std_msgs::Float32 velocidad_MD;
+		std_msgs::Float32 velocidad_MI;
+		velocidad_MD.data=radS_D;
+		velocidad_MI.data=radS_I;
 
-		encoders_pub.publish(velocidades);
+		enc_MD_pub.publish(velocidad_MD);
+		enc_MI_pub.publish(velocidad_MI);
 		
 		std::cout<<"\tVelocidades de cada Motor"<<"\n";
-		std::cout<<" RPM motor Izquierdo:"<<rpm_I<<"\n";
-		std::cout<<" RPM motor Derecho:"<<rpm_D<<"\n";
+		std::cout<<" Rad/s motor Izquierdo:"<<radS_I<<"\n";
+		std::cout<<" Rad/s motor Derecho:"<<radS_D<<"\n";
 		std::cout<<"---------------------------------------------------"<<"\n";
 
 
@@ -102,7 +118,9 @@ int main (int argc, char **argv)
     ros::NodeHandle nh;
 
 
-    encoders_pub= nh.advertise<geometry_msgs::Vector3>("/rpm",10); // configuramos el publisher
+
+    enc_MD_pub= nh.advertise<std_msgs::Float32>("motorD/velocity",10); // configuramos el publisher
+    enc_MI_pub= nh.advertise<std_msgs::Float32>("motorI/velocity",10);
 
     //Inicializacion de la libreria wiring PI
     //wiringPiSetup();
@@ -116,7 +134,7 @@ int main (int argc, char **argv)
     pinMode(D_pinA,INPUT);
     pinMode(D_pinB,INPUT);
 
-    wiringPiISR(I_pinA,INT_EDGE_RISING , &handleEncoder); // Interrupcion para cambios en el pin A encoder Izquiero
+    wiringPiISR(I_pinB,INT_EDGE_RISING , &provisional_handleEncoder); // Interrupcion para cambios en el pin A encoder Izquiero
     //wiringPiISR(D_pinA,INT_EDGE_RISING , &handleEncoder2); // Interrupcion para cambios en el pin A encoder Derecho
     wiringPiISR(D_pinB,INT_EDGE_RISING , &provisional_handleEncoder2); // interrupcion provisional por error en el encoder
 

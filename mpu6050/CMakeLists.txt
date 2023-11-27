@@ -31,7 +31,19 @@ src/math_3d.cpp
 src/MPU6050Pi.cpp
 
 
+
+
 )
 target_link_libraries(imu_node ${catkin_LIBRARIES} -lwiringPi
+)
+
+
+
+add_executable(imu_node_cmp src/read_MPU6050Pi_complete.cpp
+src/I2CPi.cpp
+src/math_3d.cpp
+src/MPU6050Pi.cpp
+)
+target_link_libraries(imu_node_cmp ${catkin_LIBRARIES} -lwiringPi
 )
 
