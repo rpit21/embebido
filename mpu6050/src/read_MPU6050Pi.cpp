@@ -60,7 +60,7 @@ int main (int argc, char **argv)
 	std::cout << std::endl;
 	// Publish in loop.
 	
-		   while(1) {
+		   while(ros::ok()) {
 		       // Get gyroscope data.
 		       mpu.GetGyroFloat(&gyro_x, &gyro_y, &gyro_z);
 		       // Get accelerometer values.
