@@ -5,6 +5,7 @@
 
 #include "ros/ros.h"
 #include "geometry_msgs/Twist.h"
+#include "std_msgs/Float32.h"
 #include <cmath>
 #include <wiringPi.h>
 #include <softPwm.h>
@@ -35,8 +36,39 @@ int L;
 
 
 
+void callback_d(const std_msgs::Float32::ConstPtr& msgd)
+{
+	float a = msgd->data;
+	
+	digitalWrite(MD_IN1, HIGH);
+	digitalWrite(MD_IN2, LOW);
+	
+	int VR = a*255/18.5;
+	
+	
+	
+	softPwmWrite(MD_ENA,abs(VR));
+}
 
-void callback(const geometry_msgs::Twist::ConstPtr & msg)
+
+void callback_i(const std_msgs::Float32::ConstPtr& msgi)
+{
+	float a = msgi->data;
+	
+	digitalWrite(MI_IN1, HIGH);
+	digitalWrite(MI_IN2, LOW);
+	
+	int VI = a*255/18.5;
+	
+	
+	
+	softPwmWrite(MI_ENA,abs(VI));
+}
+
+
+
+
+void callback(const geometry_msgs::Twist::ConstPtr& msg)
 {
 
 	
@@ -100,8 +132,10 @@ int main(int argc, char **argv)
 
 	//Crear subscriber para cada GPIO
 
-	ros::Subscriber teleop_subscriber = node_obj.subscribe("/voltaje",10,callback);
+	//ros::Subscriber teleop_subscriber = node_obj.subscribe("/voltaje",10,callback);
 
+	ros::Subscriber motorD_subscriber = node_obj.subscribe("motorD/command",10,callback_d);
+	ros::Subscriber motorI_subscriber = node_obj.subscribe("motorI/command",10,callback_i);
 
 	//Configuracion de pines
 

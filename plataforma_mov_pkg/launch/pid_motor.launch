@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<launch>
+
+
+<!-- Control de motores Node-->
+    <node pkg="plataforma_mov_pkg" type="motors" name="motores"/>
+    
+    
+    <!--Node lectura encoders-->
+    <node pkg="plataforma_mov_pkg" type="encoder" name="encoders" output="screen"/>
+    
+    <!--Node de enlace-->
+<node name="link" pkg="plataforma_mov_pkg" type="link" />
+
+
+  
+ <node name="control" pkg="pid" type="controller"  ns="rigth">
+      <param name="Kp" value="0.17993" />
+      <param name="Ki" value="2.3401" />
+      <param name="Kd" value="0.0034588" />
+      <param name="upper_limit" value="24" />
+      <param name="lower_limit" value="0" />
+      <param name="windup_limit" value="50" />
+      <param name="cutoff_frequency" value="1/8" />
+      <param name="max_loop_frequency" value="100.0" />
+      <param name="min_loop_frequency" value="100.0" />
+    </node>
+    
+    
+    <node name="control" pkg="pid" type="controller"  ns="left">
+      <param name="Kp" value="0.15686" />
+      <param name="Ki" value="1.9136" />
+      <param name="Kd" value="0.0019715" />
+      <param name="upper_limit" value="24" />
+      <param name="lower_limit" value="0" />
+      <param name="windup_limit" value="50" />
+      <param name="cutoff_frequency" value="1/8" />
+      <param name="max_loop_frequency" value="100.0" />
+      <param name="min_loop_frequency" value="100.0" />
+    </node>
+    
+    
+    
+
+</launch>

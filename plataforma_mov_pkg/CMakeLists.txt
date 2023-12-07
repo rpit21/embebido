@@ -56,6 +56,15 @@ add_executable(mostrar src/mostrar.cpp)
 add_dependencies(mostrar ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
 target_link_libraries(mostrar ${catkin_LIBRARIES} -lwiringPi)
 
+add_executable(pose_kinematics src/pose_kinematics.cpp)
+add_dependencies(pose_kinematics ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
+target_link_libraries(pose_kinematics ${catkin_LIBRARIES} -lwiringPi)
+
+add_executable(link src/pid_link.cpp)
+add_dependencies(link ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
+target_link_libraries(link ${catkin_LIBRARIES} -lwiringPi)
+
+
 #############
 ## Testing ##
 #############
