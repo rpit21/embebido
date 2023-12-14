@@ -14,11 +14,11 @@
 
 
   
- <node name="control" pkg="pid" type="controller"  ns="rigth">
+ <node name="control_I" pkg="pid" type="controller"  ns="left">
       <param name="Kp" value="0.17993" />
       <param name="Ki" value="2.3401" />
       <param name="Kd" value="0.0034588" />
-      <param name="upper_limit" value="24" />
+      <param name="upper_limit" value="18.6" />
       <param name="lower_limit" value="0" />
       <param name="windup_limit" value="50" />
       <param name="cutoff_frequency" value="1/8" />
@@ -27,11 +27,11 @@
     </node>
     
     
-    <node name="control" pkg="pid" type="controller"  ns="left">
-      <param name="Kp" value="0.15686" />
-      <param name="Ki" value="1.9136" />
+    <node name="control_D" pkg="pid" type="controller"  ns="rigth">
+      <param name="Kp" value="0.55686" />
+      <param name="Ki" value="0.29136" />
       <param name="Kd" value="0.0019715" />
-      <param name="upper_limit" value="24" />
+      <param name="upper_limit" value="18.6" />
       <param name="lower_limit" value="0" />
       <param name="windup_limit" value="50" />
       <param name="cutoff_frequency" value="1/8" />

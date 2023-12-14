@@ -43,7 +43,13 @@ void callback_d(const std_msgs::Float32::ConstPtr& msgd)
 	digitalWrite(MD_IN1, HIGH);
 	digitalWrite(MD_IN2, LOW);
 	
-	int VR = a*255/18.5;
+	//int VR = a*255/18.5;
+	
+	int VR=0.0306*exp(0.482*a);
+	
+	if(VR>255){VR=255;}
+	if(VR<0){ VR=0;}
+	
 	
 	
 	
@@ -89,8 +95,8 @@ void callback(const geometry_msgs::Twist::ConstPtr& msg)
 	//Adecuacion de limites
 	if ( VL>255){VL=255;}
 	if(VL<-255){ VL=-255;}
-	if ( VR>255){VL=255;}
-	if(VR<-255){ VL=-255;}
+	if ( VR>255){VR=255;}
+	if(VR<-255){ VR=-255;}
 
 
 	if (VL>0){
@@ -132,7 +138,7 @@ int main(int argc, char **argv)
 
 	//Crear subscriber para cada GPIO
 
-	//ros::Subscriber teleop_subscriber = node_obj.subscribe("/voltaje",10,callback);
+	ros::Subscriber teleop_subscriber = node_obj.subscribe("/voltaje",10,callback);
 
 	ros::Subscriber motorD_subscriber = node_obj.subscribe("motorD/command",10,callback_d);
 	ros::Subscriber motorI_subscriber = node_obj.subscribe("motorI/command",10,callback_i);

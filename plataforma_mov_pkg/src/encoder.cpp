@@ -10,12 +10,12 @@
 
 
 // Pines fisicos encoder Izquierdo
-int I_pinA=26;
-int I_pinB=24;
+int D_pinA=26;
+int D_pinB=24;
 
 //Pines fisicos encoder Derecho
-int D_pinA=16;
-int D_pinB=18;
+int I_pinA=16;
+int I_pinB=18;
 
 int PPR=11.0; // resolucion del enconder, 1 vuelta -> 11 pulsos
 
