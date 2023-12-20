@@ -40,12 +40,12 @@ void callback_d(const std_msgs::Float32::ConstPtr& msgd)
 {
 	float a = msgd->data;
 	
-	digitalWrite(MD_IN1, HIGH);
-	digitalWrite(MD_IN2, LOW);
+	digitalWrite(MD_IN2, HIGH);
+	digitalWrite(MD_IN1, LOW);
 	
 	//int VR = a*255/18.5;
 	
-	int VR=0.0306*exp(0.482*a);
+	float VR=0.0306*exp(0.482*a);
 	
 	if(VR>255){VR=255;}
 	if(VR<0){ VR=0;}
@@ -61,10 +61,13 @@ void callback_i(const std_msgs::Float32::ConstPtr& msgi)
 {
 	float a = msgi->data;
 	
-	digitalWrite(MI_IN1, HIGH);
-	digitalWrite(MI_IN2, LOW);
+	digitalWrite(MI_IN2, HIGH);
+	digitalWrite(MI_IN1, LOW);
 	
-	int VI = a*255/18.5;
+	int VI=0.0306*exp(0.482*a);
+	
+	if(VI>255){VI=255;}
+	if(VI<0){ VI=0;}
 	
 	
 	

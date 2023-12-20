@@ -36,7 +36,6 @@
     
     <!--Node visualizacion de datos -->
     
-    <node pkg="plataforma_mov_pkg" type="mostrar" name="view" output="screen"/>
     
     <node pkg="plataforma_mov_pkg" type="pose_kinematics" name="pose" output="screen"/>
     

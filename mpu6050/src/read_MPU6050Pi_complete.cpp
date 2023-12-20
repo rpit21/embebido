@@ -31,22 +31,22 @@ int main (int argc, char **argv)
 
 
     //Ros params
-    double acc_x_offset = 0;
-    double acc_y_offset = 0;
-    double acc_z_offset = 0;
+    double acc_x_offset = 0.0;
+    double acc_y_offset = 0.0;
+    double acc_z_offset = 0.0;
 
-    double gyr_x_offset = 0;
-    double gyr_y_offset = 0;
-    double gyr_z_offset = 0;
+    double gyr_x_offset = 0.0;
+    double gyr_y_offset = 0.0;
+    double gyr_z_offset = 0.0;
 
 
-    nh.param<double>("acceleration_x_offset",acc_x_offset,0);
-    nh.param<double>("acceleration_y_offset",acc_y_offset,0);
-    nh.param<double>("acceleration_z_offset",acc_z_offset,0);
+    nh.param<double>("acceleration_x_offset",acc_x_offset,0.0);
+    nh.param<double>("acceleration_y_offset",acc_y_offset,0.0);
+    nh.param<double>("acceleration_z_offset",acc_z_offset,0.0);
 
-    nh.param<double>("gyro_x_offset",gyr_x_offset,0);
-    nh.param<double>("gyro_y_offset",gyr_y_offset,0);
-    nh.param<double>("gyro_z_offset",gyr_z_offset,0);
+    nh.param<double>("gyro_x_offset",gyr_x_offset,0.0);
+    nh.param<double>("gyro_y_offset",gyr_y_offset,0.0);
+    nh.param<double>("gyro_z_offset",gyr_z_offset,0.0);
 
 
     std::cout << "----------------------------" << std::endl;
