@@ -118,19 +118,19 @@ void callback(const geometry_msgs::Twist::ConstPtr& msg)
 
 
 	if (VL>0){
-		digitalWrite(MI_IN1, HIGH);
-		digitalWrite(MI_IN2, LOW);
-	} else if (VL<0){
-		digitalWrite(MI_IN1, LOW);
 		digitalWrite(MI_IN2, HIGH);
+		digitalWrite(MI_IN1, LOW);
+	} else if (VL<0){
+		digitalWrite(MI_IN2, LOW);
+		digitalWrite(MI_IN1, HIGH);
 	}
 
 	if (VR>0){
-			digitalWrite(MD_IN1, HIGH);
-			digitalWrite(MD_IN2, LOW);
-		} else if (VR<0){
-			digitalWrite(MD_IN1, LOW);
 			digitalWrite(MD_IN2, HIGH);
+			digitalWrite(MD_IN1, LOW);
+		} else if (VR<0){
+			digitalWrite(MD_IN2, LOW);
+			digitalWrite(MD_IN1, HIGH);
 		}
 
 

@@ -6,7 +6,7 @@
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2/LinearMath/Quaternion.h>
 
-#define b  0.247
+#define b  0.7327
 #define r  0.062;
 
 double wr =0;
