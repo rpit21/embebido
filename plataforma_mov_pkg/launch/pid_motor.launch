@@ -15,9 +15,9 @@
 
   
  <node name="control_I" pkg="pid" type="controller"  ns="left">
-      <param name="Kp" value="0.41" />
-      <param name="Ki" value="0.46" />
-      <param name="Kd" value="0.0019715" />
+      <param name="Kp" value="0.17993" />
+      <param name="Ki" value="2.3401" />
+      <param name="Kd" value="0.0034588" />
       <param name="upper_limit" value="18.6" />
       <param name="lower_limit" value="0" />
       <param name="windup_limit" value="50" />

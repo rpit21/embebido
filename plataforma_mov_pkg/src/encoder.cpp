@@ -38,7 +38,6 @@ void handleEncoder(){
 
 	int stateA_I = digitalRead(I_pinA);
 	int stateB_I = digitalRead(I_pinB);
-	pulse_count_encI++;
 
 	if (stateA_I==1 & stateB_I==1){
 
