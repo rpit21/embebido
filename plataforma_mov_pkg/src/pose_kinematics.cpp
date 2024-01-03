@@ -1,4 +1,5 @@
 #include <ros/ros.h>
+#include <iostream>
 #include <geometry_msgs/TransformStamped.h>
 #include <geometry_msgs/TwistStamped.h>
 #include <nav_msgs/Odometry.h>
@@ -6,7 +7,7 @@
 #include <tf2/LinearMath/Quaternion.h>
 
 #define b  0.247
-#define r  0.068;
+#define r  0.062;
 
 double wr =0;
 double wl = 0;
@@ -70,6 +71,8 @@ int main(int argc, char** argv){
 			 y_ant = y;
 			 theta_ant =theta;
 			 t_ant = ros_t.toSec();
+			 
+			 std::cout<<"--Theta:"<<theta<<"\n";
 
 
 			 nav_msgs::Odometry pos;
