@@ -64,6 +64,16 @@ add_executable(link src/pid_link.cpp)
 add_dependencies(link ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
 target_link_libraries(link ${catkin_LIBRARIES} -lwiringPi)
 
+add_executable(pos_control src/pos_control.cpp)
+add_dependencies(pos_control ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
+target_link_libraries(pos_control ${catkin_LIBRARIES} -lwiringPi)
+
+
+add_executable(vel_setpoint src/vel_setpoint.cpp)
+add_dependencies(vel_setpoint ${catkin_EXPORTED_TARGETS} ${${PROJECT_NAME}_EXPORTED_TARGETS})
+target_link_libraries(vel_setpoint ${catkin_LIBRARIES} -lwiringPi)
+
+
 
 #############
 ## Testing ##
