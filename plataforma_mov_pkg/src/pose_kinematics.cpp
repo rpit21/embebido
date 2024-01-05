@@ -7,7 +7,7 @@
 #include <tf2/LinearMath/Quaternion.h>
 
 #define b  0.7327
-#define r  0.062;
+#define r  0.062
 
 double wr =0;
 double wl = 0;

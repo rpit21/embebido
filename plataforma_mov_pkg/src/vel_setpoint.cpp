@@ -1,7 +1,7 @@
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
 #include <std_msgs/Float64.h>
-#include <geometry_msgs/TwistStamped.h>
+#include <geometry_msgs/Twist.h>
 #include <iostream>
 #include <sstream>
 
@@ -11,10 +11,10 @@ std_msgs::Float64 vel_d;
 std_msgs::Float64 vel_i;
 
 
-void vel_callback(const geometry_msgs::TwistStamped::ConstPtr & msg)
+void vel_callback(const geometry_msgs::Twist::ConstPtr & msg)
 {
-	double v = msg->twist.linear.x;
-	double w = msg->twist.angular.z;
+	double v = msg->linear.x;
+	double w = msg->angular.z;
 	
 	double v_i= v-w;
 	double v_d= v+w;
@@ -35,8 +35,8 @@ int main(int argc, char **argv)
   ros::Rate loop_rate(1);
   
   //The node advertises the joint values of the pan-tilt
-  ros::Publisher state_pub_D = n.advertise<std_msgs::Float64>("rigth/setpoint", 10);
-  ros::Publisher state_pub_I = n.advertise<std_msgs::Float64>("left/setpoint", 10);
+  ros::Publisher state_pub_D = n.advertise<std_msgs::Float64>("/rigth/setpoint", 10);
+  ros::Publisher state_pub_I = n.advertise<std_msgs::Float64>("/left/setpoint", 10);
   
   ros::Subscriber sub_vel = n.subscribe("/cmd_vel",10,vel_callback);
 
