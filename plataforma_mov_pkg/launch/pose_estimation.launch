@@ -73,7 +73,7 @@
    <param name="x_setpoint" value="-1.0" />
    <param name="y_setpoint" value="1.0" />
    <param name="kv" value="0.5" />
-   <param name="kw" value="2.4" />
+   <param name="kw" value="1.4" />
     </node>
     
  

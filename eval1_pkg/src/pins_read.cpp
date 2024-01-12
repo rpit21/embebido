@@ -6,50 +6,62 @@
 
 int main (int argc, char **argv)
 {
-	int sw = 17;  //switch pin
-	int pul= 27; // pulsador pin
+	// Pines encoder Izquierdo
+    int I_pinA=26;
+    int I_pinB=24;
+
+    //Pines encoder Derecho
+    int D_pinA=16;
+    int D_pinB=18;
+    
+    //iniciamos nodod
 
     ros::init(argc, argv, "gpio_read_publisher");
+    
+    // generamos un objeto de de nodehandle
     ros::NodeHandle nh;
-    ros::Publisher sw_status = nh.advertise<std_msgs::Int32>("/sw",10);
-    ros::Publisher pul_status = nh.advertise<std_msgs::Int32>("/pul",10);
+    
+    //generacion de publicadores
+    //ros::Publisher sw_status = nh.advertise<std_msgs::Int32>("/sw",10);
+    //ros::Publisher pul_status = nh.advertise<std_msgs::Int32>("/pul",10);
 
-    wiringPiSetupGpio();
-    pinMode(sw, INPUT);
-    pinMode(pul, INPUT);
+    //Inicializacion de la libreria wiring PI
+    //wiringPiSetup();
+    wiringPiSetupPhys();
 
-    std::cout<<"Pin SW "<<sw<<" Set as INPUT"<<"\n";
-    std::cout<<"Pin BOT"<<pul<<" Set as INPUT"<<"\n";
+    // definir entradas para pines de encoder Izquierdo
+    pinMode(I_pinA,INPUT);
+    pinMode(I_pinB,INPUT);
 
-    ros::Rate loop_rate(3);
+    // definir entradas para pines de encoder Derecho
+    pinMode(D_pinA,INPUT);
+    pinMode(D_pinB,INPUT);
+    
+    
+    
+
+    
+
+    ros::Rate loop_rate(10);
 
     while (ros::ok())
     {
     	std_msgs::Int32 statusw;
     	std_msgs::Int32 statupul;
+        
+        //lectura de pines
 
-        int giro = digitalRead(sw);
-        int paro = digitalRead(pul);
-
-        statusw.data = giro;
-        sw_status.publish(statusw);
-
-        statupul.data=paro;
-        pul_status.publish(statupul);
-
-
-
-
-        if(paro==1){
-        	std::cout<<"Paro"<<"\n";
-        }else{
-
-        	if(giro==1){
-        	    std::cout<<"Horario"<<"\n";
-        	}else {
-        	    std::cout<<"Antihorario"<<"\n";
-        	}
-        }
+        int status_I_pinA=digitalRead(I_pinA);
+        int status_I_pinB=digitalRead(I_pinB);
+    
+        int status_D_pinA=digitalRead(D_pinA);
+        int status_D_pinB=digitalRead(D_pinB);
+        
+        
+        std::cout<<"Pin A I:"<<status_I_pinA<<" Set as INPUT"<<"\n";
+        std::cout<<"Pin B I:"<<status_I_pinB<<" Set as INPUT"<<"\n";
+        std::cout<<"Pin A D:"<<status_D_pinA<<" Set as INPUT"<<"\n";
+        std::cout<<"Pin B D:"<<status_D_pinB<<" Set as INPUT"<<"\n";
 
 
         ros::spinOnce();

@@ -116,8 +116,9 @@ int main(int argc, char* argv[])
    state_pub_I = nh_.advertise<std_msgs::Float64>("/left/setpoint", 10);
 
    // odometry subscribers
-   ros::Subscriber odom_sub_ = nh_.subscribe("/kinematics_odom", 10, odomCallback);
+   //ros::Subscriber odom_sub_ = nh_.subscribe("/kinematics_odom", 10, odomCallback);
    
+   ros::Subscriber odom_sub_ = nh_.subscribe("/odometry/filtered", 10, odomCallback);
    
    while(ros::ok()){
  

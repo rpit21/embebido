@@ -16,7 +16,7 @@ int range = 100;
 int pin = 12; // pin del pwm
 int pwm;
 int sentido;
-int stop;
+int stop=0;
 
 #define IN1 3 // Pin In1
 #define IN2 4 // Pin In2
@@ -29,21 +29,21 @@ int stop;
 
 void leds_indicador(){
 
-	if (pwm==20){
+	if (pwm>=20 & pwm<40){
 		digitalWrite(LED1, HIGH);
 		digitalWrite(LED2, LOW);
 		digitalWrite(LED3, LOW);
 		digitalWrite(LED4, LOW);
 		digitalWrite(LED5, LOW);
 
-	}else if (pwm==40){
+	}else if (pwm>=40 & pwm<60) {
 		digitalWrite(LED1, HIGH);
 		digitalWrite(LED2, HIGH);
 		digitalWrite(LED3, LOW);
 		digitalWrite(LED4, LOW);
 		digitalWrite(LED5, LOW);
 
-	}else if (pwm==60){
+	}else if (pwm>=60 & pwm<80){
 		digitalWrite(LED1, HIGH);
 		digitalWrite(LED2, HIGH);
 		digitalWrite(LED3, HIGH);
@@ -51,7 +51,7 @@ void leds_indicador(){
 		digitalWrite(LED5, LOW);
 
 
-	}else if (pwm==80){
+	}else if (pwm>=80  & pwm<100){
 		digitalWrite(LED1, HIGH);
 		digitalWrite(LED2, HIGH);
 		digitalWrite(LED3, HIGH);
@@ -80,13 +80,14 @@ void callback(const geometry_msgs::Twist::ConstPtr & msg)
 
 	int vel = msg->linear.x;
 
-	vel=10*vel;
+	vel=2.5*vel;
 	pwm=pwm+vel;
 
 	if (stop==1){
 			pwm=0;
+			vel=0;
 	}else{
-
+		
 		if (pwm>=range){
 				pwm=100;
 		}
@@ -108,25 +109,30 @@ void callback(const geometry_msgs::Twist::ConstPtr & msg)
 void callback_sentido (const std_msgs::Int32::ConstPtr & msg){
 
 	sentido = msg->data;
-
-	if (sentido==1){
-		digitalWrite(IN1, HIGH);
-		digitalWrite(IN2, LOW);
-		std::cout<<"Sentido:Horario"<<"\n";
-	}else{
+	
+	if (stop==1){
 		digitalWrite(IN1, LOW);
-		digitalWrite(IN2, HIGH);
-		std::cout<<"Sentido:Antihorario"<<"\n";
+		digitalWrite(IN2, LOW);
+		std::cout<<"Sentido:paro"<<"\n";
+	} else {
+		if (sentido==1){
+			digitalWrite(IN1, HIGH);
+			digitalWrite(IN2, LOW);
+			std::cout<<"Sentido:Horario"<<"\n";
+		}else if(sentido==0){
+			digitalWrite(IN1, LOW);
+			digitalWrite(IN2, HIGH);
+			std::cout<<"Sentido:Antihorario"<<"\n";
+		}
 	}
+
+	
 
 }
 
 void callback_parada (const std_msgs::Int32::ConstPtr & msg){
 	stop=msg->data;
 
-	if (stop==1){
-		pwm=0;
-	}
 
 }
 

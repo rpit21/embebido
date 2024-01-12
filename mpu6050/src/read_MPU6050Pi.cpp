@@ -23,7 +23,7 @@ int main (int argc, char **argv)
 
     ros::init(argc, argv, "gpio_read_mpu6050");
     ros::NodeHandle nh;
-    ros::Publisher imu_pub = nh.advertise<sensor_msgs::Imu>("/imu_mpu6050",10);
+    ros::Publisher imu_pub = nh.advertise<sensor_msgs::Imu>("/imu/data",10);
     ros::Rate loop_rate(3);
 
     // Connect to device with default setting
