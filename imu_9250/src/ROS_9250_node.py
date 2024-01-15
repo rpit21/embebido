@@ -4,6 +4,7 @@ import time
 import sys
 import signal
 import rospy
+import math
 
 from sensor_msgs.msg import Imu
 from std_msgs.msg import Header
@@ -50,13 +51,13 @@ def imu_publisher():
         imu_msg.header.stamp = rospy.Time.now()
         imu_msg.header.frame_id = 'map'
         
-        imu_msg.linear_acceleration.x = ax_cal*9.81
-        imu_msg.linear_acceleration.y = ay_cal*9.81
-        imu_msg.linear_acceleration.z = az_cal*9.81
+        imu_msg.linear_acceleration.x = ax_cal*9.81*-1
+        imu_msg.linear_acceleration.y = ay_cal*9.81*-1
+        imu_msg.linear_acceleration.z = az_cal*9.81*-1
         
-        imu_msg.angular_velocity.x = wx_cal #GRADOS POR SEGUNDO transformar a rad por segundo 
-        imu_msg.angular_velocity.y = wy_cal
-        imu_msg.angular_velocity.z = wz_cal
+        imu_msg.angular_velocity.x = wx_cal*(math.pi/180) #GRADOS POR SEGUNDO transformar a rad por segundo 
+        imu_msg.angular_velocity.y = wy_cal*(math.pi/180)
+        imu_msg.angular_velocity.z = wz_cal*(math.pi/180)
         
         pub.publish(imu_msg)
             

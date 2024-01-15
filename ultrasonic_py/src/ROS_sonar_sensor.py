@@ -25,8 +25,8 @@ class sonar():
         
         
 gpio.setmode(gpio.BCM)
-trig = 2 # 7th
-echo = 3 # 6th
+trig = 9 # 7th
+echo = 10 # 6th
 
 gpio.setup(trig, gpio.OUT)
 gpio.setup(echo, gpio.IN)
