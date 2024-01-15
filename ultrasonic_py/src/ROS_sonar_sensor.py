@@ -24,14 +24,17 @@ class sonar():
         self.distance_publisher.publish(data)
         
         
+
+
+sensor=sonar()
+
 gpio.setmode(gpio.BCM)
-trig = 9 # 7th
-echo = 10 # 6th
+trig = rospy.get_param('~trig',0) # 7th
+echo = rospy.get_param('~echo',1) # 6th
 
 gpio.setup(trig, gpio.OUT)
 gpio.setup(echo, gpio.IN)
 
-sensor=sonar()
 time.sleep(0.5)
 print ('starting sonar')
 try :
