@@ -16,7 +16,8 @@ signal.signal(signal.SIGINT, signal_handler)
 class sonar():
     def __init__(self):
         rospy.init_node('sonar', anonymous=True)
-        self.distance_publisher = rospy.Publisher('/sonar_dist',Float32, queue_size=1)
+        namespace= rospy.get_namespace()
+        self.distance_publisher = rospy.Publisher(namespace + 'sonar_dist',Float32, queue_size=1)
         self.r = rospy.Rate(15)
     def dist_sendor(self,dist):
         data = Float32()
@@ -31,6 +32,8 @@ sensor=sonar()
 gpio.setmode(gpio.BCM)
 trig = rospy.get_param('~trig',0) # 7th
 echo = rospy.get_param('~echo',1) # 6th
+
+
 
 gpio.setup(trig, gpio.OUT)
 gpio.setup(echo, gpio.IN)

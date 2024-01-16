@@ -1,18 +1,20 @@
+<?xml version="1.0"?>
 <launch>
 
-    <node pkg="ultrasonic_py" name="C_ultrasonic_py" type="ROS_sonar_sensor.py" ns="center" output="screen" required="true"> 
-    < param name"trig" type="int" value="9"/>
-    < param name"echo" type="int" value="10"/>
+    <node pkg="ultrasonic_py" name="C_ultrasonic_py" type="ROS_sonar_sensor.py" ns="cent" output="screen" required="true"> 
+    <param name="trig" value="9"/>
+    <param name="echo" value="10"/>
+    </node>
+   
+    
+    <node pkg="ultrasonic_py" name="I_ultrasonic_py" type="ROS_sonar_sensor.py" ns="izq" output="screen" required="true"> 
+    <param name="trig" value="14"/>
+    <param name="echo" value="15"/>
     </node>
     
-    <node pkg="ultrasonic_py" name="I_ultrasonic_py" type="ROS_sonar_sensor.py" ns="left" output="screen" required="true"> 
-    < param name"trig" type="int" value="14"/>
-    < param name"echo" type="int" value="10"/>
-    </node>
-    
-      <node pkg="ultrasonic_py" name="D_ultrasonic_py" type="ROS_sonar_sensor.py" ns="rigth" output="screen" required="true"> 
-    < param name"trig" type="int" value="11"/>
-    < param name"echo" type="int" value="19"/>
+    <node pkg="ultrasonic_py" name="D_ultrasonic_py" type="ROS_sonar_sensor.py" ns="der" output="screen" required="true"> 
+    <param name="trig" value="11"/>
+    <param name="echo" value="19"/>
     </node>
 
 </launch>
