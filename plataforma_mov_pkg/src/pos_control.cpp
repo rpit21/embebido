@@ -27,22 +27,46 @@ double kw;
 ros::Publisher state_pub_D;
 ros::Publisher state_pub_I;
 
+
+std::vector<std::vector<double>> waypoints = {
+        {0.5, 0},
+      
+    };
+double waypoint_count = 0;
+
+
+
 /*******************************************************************************
 * Control Loop function
 *******************************************************************************/
 bool controlLoop()
 {
+	double wp_x = waypoints[waypoint_count][0];
+	double wp_y = waypoints[waypoint_count][1];
+	std::cout<<"x: "<<wp_x<<"y: "<<wp_y<<std::endl;
 
 	//error
-	double ex = xd - x[0];
-	double ey = yd - x[1];
+	double ex = wp_x- x[0];
+	double ey = wp_y - x[1];
+	 
+	 
+	 double err_norm = sqrt(ex*ex + ey*ey);
+	if(err_norm<=0.2){
+	waypoint_count++;	
+	}
 
+	double v,w;
+	if(waypoint_count<waypoints.size()){
+	
 
-
-
-	 double th_g = atan2(ey,ex);
-	 double v = kv*sqrt(ex*ex + ey*ey);
-	 double w = kw*(th_g - x[2]);
+	 double th_g = atan2(ey,ex+1e-6)-x[2];
+	 
+	 v = kv*sqrt(ex*ex + ey*ey)*cos(th_g);
+	 w = kv*cos(th_g) * sin(th_g) + kw*th_g;
+	 }else{
+	 v=0;
+	 w=0;
+	 }
 
 	 //accion de control
 	 //aqui se deberia calcular y publicar wr y wl
@@ -59,7 +83,7 @@ bool controlLoop()
 	 vel_d.data = wr;
 	 vel_i.data = wl;
 	 
-	  state_ready_to_pub = true;
+	 state_ready_to_pub = true;
 	 
 	 //state_pub_D.publish(vel_d);
 	 //state_pub_I.publish(vel_i);
@@ -116,9 +140,9 @@ int main(int argc, char* argv[])
    state_pub_I = nh_.advertise<std_msgs::Float64>("/left/setpoint", 10);
 
    // odometry subscribers
-   //ros::Subscriber odom_sub_ = nh_.subscribe("/kinematics_odom", 10, odomCallback);
+   ros::Subscriber odom_sub_ = nh_.subscribe("/kinematics_odom", 10, odomCallback);
    
-   ros::Subscriber odom_sub_ = nh_.subscribe("/odometry/filtered", 10, odomCallback);
+   //ros::Subscriber odom_sub_ = nh_.subscribe("/odometry/filtered", 10, odomCallback);
    
    while(ros::ok()){
  

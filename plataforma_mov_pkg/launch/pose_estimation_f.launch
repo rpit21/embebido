@@ -41,21 +41,10 @@
     
     
      <!--Node para de mpu-->
-    
-<param name = "acceleration_x_m"     value = "-9.8"/>
-  <param name = "acceleration_y_m"     value = "-9.8"/>
-  <param name = "acceleration_z_m"     value = "-9.8"/>
-
-  <param name = "acceleration_x_b"     value = "-0.345"/>
-  <param name = "acceleration_y_b"     value = "0.653"/>
-  <param name = "acceleration_z_b"     value = "1.01"/>
-
-
-  <param name = "gyro_x_offset"     value = "-5.647374045801527"/>
-  <param name = "gyro_y_offset"     value = "2.040763358778626"/>
-  <param name = "gyro_z_offset"     value = "-1.4516030534351145"/>
-
-  <node name="mpu_node" pkg="mpu6050" type="imu_node" output="screen"/>
+   <node pkg="imu_9250" name="imu_9250" type="ROS_9250_node.py" output="screen" required="true"> </node>
+   
+    <!--Node para el magnetometro-->
+    <node pkg="magnetometer" name="magnetometer" type="ROS_magnetometer_node.py" output="screen"> </node>
 
   
    <!--Node para estimacion de poses-->
@@ -66,6 +55,7 @@
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
     <rosparam command="load" file="$(find robot_localization)/params/ekf_templatev2.yaml" />
      </node> 
+    
     
     <!--Node para para poner las coordenadas -->
    <node name="control" pkg="plataforma_mov_pkg" type="pos_control" output="screen">

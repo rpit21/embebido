@@ -13,6 +13,7 @@ double wr =0;
 double wl = 0;
 bool got_wr = false;
 bool got_wl = false;
+bool got_th = false;
 double t = 0;
 double t_ant = -1;
 
@@ -30,6 +31,11 @@ void right_callback(geometry_msgs::TwistStamped::ConstPtr msg){
 	got_wr = true;
 }
 
+void mag_callback(geometry_msgs::Float32::ConstPtr msg_th){
+	theta = msg_th->data;
+	got_th = true;
+}
+
 
 int main(int argc, char** argv){
   ros::init(argc, argv, "my_tf2_listener");
@@ -38,7 +44,9 @@ int main(int argc, char** argv){
 
  
 
-  ros::Subscriber wheel_sub = node.subscribe("motors/velocity",10,right_callback);
+  ros::Subscriber wheel_sub = node.subscribe("motors/velocity",10,right_callback); //subscriptor de las las velocidades 
+  ros::Subscriber mag_sub = node.subscribe("/theta",10,mag_callback);  //subscriptor del magnetometro
+  
   ros::Publisher odom = node.advertise<nav_msgs::Odometry>("kinematics_odom",10);
 
 
@@ -62,7 +70,9 @@ int main(int argc, char** argv){
 			 v = (vr + vl)/2;
 			 w = (vr - vl)/b;
 
-			 theta = theta_ant + w*dt;
+			// theta = theta_ant + w*dt;
+			
+			
 			 x = x_ant + v * cos(theta)*dt;
 			 y = y_ant + v * sin(theta)*dt;
 
@@ -97,6 +107,7 @@ int main(int argc, char** argv){
 
 			 got_wr = false;
 			 got_wl = false;
+			 got_th = false;
 
 			   /*tf2_ros::TransformBroadcaster br;
 			   geometry_msgs::TransformStamped transformStamped;
