@@ -51,7 +51,7 @@ void callback_d(const std_msgs::Float32::ConstPtr& msgd)
 	
 	//int VR = a*255/18.5;
 	
-	float VR=0.0306*exp(0.482*a);
+	float VR=0.0306*exp(0.482*abs(a));
 	
 
 	
@@ -61,7 +61,7 @@ void callback_d(const std_msgs::Float32::ConstPtr& msgd)
 	
 	
 	
-	softPwmWrite(MD_ENA,abs(VR));
+	softPwmWrite(MD_ENA,VR);
 }
 
 
@@ -78,7 +78,7 @@ void callback_i(const std_msgs::Float32::ConstPtr& msgi)
 	}
 	
 	
-	int VI=0.0306*exp(0.482*b);
+	int VI=0.0306*exp(0.482*abs(b));
 	
 	
 	if(VI>255){VI=255;}
@@ -86,7 +86,7 @@ void callback_i(const std_msgs::Float32::ConstPtr& msgi)
 	
 	
 	
-	softPwmWrite(MI_ENA,abs(VI));
+	softPwmWrite(MI_ENA,VI);
 }
 
 

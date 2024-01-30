@@ -29,7 +29,11 @@ ros::Publisher state_pub_I;
 
 
 std::vector<std::vector<double>> waypoints = {
-        {0.5, 0},
+        {0, 0.5},
+        {0, 1},
+	{0,2},
+        {0, 2.5},
+	
       
     };
 double waypoint_count = 0;
@@ -47,11 +51,11 @@ bool controlLoop()
 
 	//error
 	double ex = wp_x- x[0];
-	double ey = wp_y - x[1];
+	double ey = wp_y -x[1];
 	 
 	 
 	 double err_norm = sqrt(ex*ex + ey*ey);
-	if(err_norm<=0.2){
+	if(err_norm<=0.1){
 	waypoint_count++;	
 	}
 
@@ -64,8 +68,8 @@ bool controlLoop()
 	 v = kv*sqrt(ex*ex + ey*ey)*cos(th_g);
 	 w = kv*cos(th_g) * sin(th_g) + kw*th_g;
 	 }else{
-	 v=0;
-	 w=0;
+	 v=0.0;
+	 w=0.0;
 	 }
 
 	 //accion de control
@@ -107,7 +111,7 @@ void odomCallback(const nav_msgs::Odometry::ConstPtr &msg)
   x[1] = msg->pose.pose.position.y;
   x[2] = theta;
   controlLoop();
-  std::cout<<"odom vx "<<msg->twist.twist.linear.x<<" vy "<<msg->twist.twist.linear.y<<" th "<<msg->twist.twist.angular.z<<"\n";
+  std::cout<<"odom vx "<<msg->pose.pose.position.x<<" vy "<<msg->pose.pose.position.y<<" th "<<theta<<"\n";
 
 
 }
@@ -129,7 +133,7 @@ int main(int argc, char* argv[])
    nh_.param<double>("kv",kv,0);
    nh_.param<double>("kw",kw,0);
 
-   std::cout<<"set point: "<<xd<<" , "<<yd<<"\n";
+    std::cout<<"set point: "<< waypoints[waypoint_count][0]<<" , "<< waypoints[waypoint_count][1]<<"\n";
    //state size
    x.resize(3);
 

@@ -19,7 +19,7 @@
       <param name="Ki" value="2.2401" />
       <param name="Kd" value="0.0024588" />
       <param name="upper_limit" value="18.6" />
-      <param name="lower_limit" value="0" />
+      <param name="lower_limit" value="-18.6" />
       <param name="windup_limit" value="50" />
       <param name="cutoff_frequency" value="1/8" />
       <param name="max_loop_frequency" value="100.0" />
@@ -32,12 +32,14 @@
       <param name="Ki" value="1.9136" />
       <param name="Kd" value="0.0019715" />
       <param name="upper_limit" value="18.6" />
-      <param name="lower_limit" value="0" />
+      <param name="lower_limit" value="-18.6" />
       <param name="windup_limit" value="50" />
       <param name="cutoff_frequency" value="1/8" />
       <param name="max_loop_frequency" value="100.0" />
       <param name="min_loop_frequency" value="100.0" />
     </node>
+    
+    <node pkg="magnetometer" name="magnetometer" type="ROS_magnetometer_node.py"> </node>
     
     
     <node name="pose_kinematics" pkg="plataforma_mov_pkg" type="pose_kinematics" output="screen"/>

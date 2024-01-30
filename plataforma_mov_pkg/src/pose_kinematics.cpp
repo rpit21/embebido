@@ -5,6 +5,7 @@
 #include <nav_msgs/Odometry.h>
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2/LinearMath/Quaternion.h>
+#include <std_msgs/Float32.h>
 
 #define b  0.7327
 #define r  0.062
@@ -31,7 +32,7 @@ void right_callback(geometry_msgs::TwistStamped::ConstPtr msg){
 	got_wr = true;
 }
 
-void mag_callback(geometry_msgs::Float32::ConstPtr msg_th){
+void mag_callback(std_msgs::Float32::ConstPtr msg_th){
 	theta = msg_th->data;
 	got_th = true;
 }
@@ -79,7 +80,7 @@ int main(int argc, char** argv){
 
 			 x_ant = x;
 			 y_ant = y;
-			 theta_ant =theta;
+			 theta_ant=theta;
 			 t_ant = ros_t.toSec();
 			 
 			 std::cout<<"--Theta:"<<theta<<"\n";

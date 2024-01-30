@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+
+
+
+    
+    <!--Node para para poner las coordenadas -->
+   <node name="control" pkg="plataforma_mov_pkg" type="pos_control" output="screen">
+   <param name="kv" value="0.5" />
+   <param name="kw" value="0.7" />
+    </node>
+    
+ 
+    
+    
+
+</launch>
