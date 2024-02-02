@@ -54,16 +54,16 @@ int main(int argc, char **argv)
   ros::NodeHandle n;
   
   //The node advertises the joint values of the pan-tilt
-  ros::Publisher state_pub_D = n.advertise<std_msgs::Float64>("rigth/state", 10);
-  ros::Publisher state_pub_I = n.advertise<std_msgs::Float64>("left/state", 10);
+  ros::Publisher state_pub_D = n.advertise<std_msgs::Float64>("/rigth/state", 10);
+  ros::Publisher state_pub_I = n.advertise<std_msgs::Float64>("/left/state", 10);
   
   ros::Publisher control_pub_d = n.advertise<std_msgs::Float32>("motorD/command", 10);
   ros::Publisher control_pub_i = n.advertise<std_msgs::Float32>("motorI/command", 10);
   
   ros::Subscriber sub_vel = n.subscribe("motors/velocity",10,vel_callback);
   
-  ros::Subscriber sub_eff_D = n.subscribe("rigth/control_effort",10,act_callback_D);
-  ros::Subscriber sub_eff_I = n.subscribe("left/control_effort",10,act_callback_I);
+  ros::Subscriber sub_eff_D = n.subscribe("/rigth/control_effort",10,act_callback_D);
+  ros::Subscriber sub_eff_I = n.subscribe("/left/control_effort",10,act_callback_I);
   
   std::cout<<" Ready link controller"<<std::endl; 
  

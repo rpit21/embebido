@@ -17,6 +17,8 @@ std_msgs::Float64 vel_i;
 
 bool state_ready_to_pub = false;
 
+bool obs = false;
+
 
 double xd=0;
 double yd=0;
@@ -27,12 +29,26 @@ double kw;
 ros::Publisher state_pub_D;
 ros::Publisher state_pub_I;
 
+void ultCallback(const geometry_msgs::Twist::ConstPtr& msg)
+{
+
+	
+	float i= msg->linear.x;
+	float c = msg->linear.y;
+	float d = msg->linear.z;
+	
+	if (i<=30.0||c<=30.0||d<=30.0) {
+	   obs=true;
+	   }
+	
+	
+}
+
 
 std::vector<std::vector<double>> waypoints = {
-        {0, 0.5},
-        {0, 1},
-	{0,2},
-        {0, 2.5},
+        {0.5, 0},
+        {1, 0},
+	{1, 1}
 	
       
     };
@@ -51,11 +67,11 @@ bool controlLoop()
 
 	//error
 	double ex = wp_x- x[0];
-	double ey = wp_y -x[1];
-	 
-	 
-	 double err_norm = sqrt(ex*ex + ey*ey);
-	if(err_norm<=0.1){
+	double ey = wp_y - x[1];
+	
+	
+	double err_norm = sqrt(ex*ex + ey*ey);
+	if(err_norm<=0.3){
 	waypoint_count++;	
 	}
 
@@ -68,14 +84,16 @@ bool controlLoop()
 	 v = kv*sqrt(ex*ex + ey*ey)*cos(th_g);
 	 w = kv*cos(th_g) * sin(th_g) + kw*th_g;
 	 }else{
-	 v=0.0;
-	 w=0.0;
+	 v=0;
+	 w=0;
 	 }
 
 	 //accion de control
 	 //aqui se deberia calcular y publicar wr y wl
 	  double wr = (v+w*b/2.0)/r;
 	  double wl = (v-w*b/2.0)/r;
+	  
+	  
 
 	 //la simulación me permite enviar directamente velocidad lineal y angular
 	 //geometry_msgs::Twist cmd_vel;
@@ -83,9 +101,18 @@ bool controlLoop()
 	 //cmd_vel.angular.z = w;
 	 //cmd_vel_pub_.publish(cmd_vel);
 	 
-	
+	 if(obs==true){
+	 vel_d.data = 0.0;
+	 vel_i.data = 0.0;
+	 
+	 obs = false;
+	    }else{
+	       
 	 vel_d.data = wr;
 	 vel_i.data = wl;
+	       }
+	
+	 
 	 
 	 state_ready_to_pub = true;
 	 
@@ -145,6 +172,7 @@ int main(int argc, char* argv[])
 
    // odometry subscribers
    ros::Subscriber odom_sub_ = nh_.subscribe("/kinematics_odom", 10, odomCallback);
+   ros::Subscriber ult_sub = nh_.subscribe("/ultrasonics", 10, ultCallback);
    
    //ros::Subscriber odom_sub_ = nh_.subscribe("/odometry/filtered", 10, odomCallback);
    

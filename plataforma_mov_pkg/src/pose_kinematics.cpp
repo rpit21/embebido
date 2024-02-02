@@ -54,7 +54,7 @@ int main(int argc, char** argv){
 
 
   while (node.ok()){
-	 if(got_wr){
+	 if(got_wr && got_th){
 		 if(t_ant<0){
 			 t = ros_t.toSec();
 			 t_ant = t;

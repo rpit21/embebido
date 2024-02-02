@@ -7,7 +7,7 @@ import time
 from geometry_msgs.msg import Twist
 
 class UltrasonicNode:
-    def _init_(self):
+    def __init__(self):
         # Configurar pines GPIO para los sensores ultrasónicos
         self.pin_trig1 = 14  # GPIO 17 para el primer sensor
         self.pin_echo1 = 15
@@ -71,7 +71,7 @@ class UltrasonicNode:
 
             rate.sleep()
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     try:
         ultrasonic_node = UltrasonicNode()
         ultrasonic_node.run()

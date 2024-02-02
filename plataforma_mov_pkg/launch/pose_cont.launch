@@ -4,8 +4,8 @@
     
     <!--Node para para poner las coordenadas -->
    <node name="control" pkg="plataforma_mov_pkg" type="pos_control" output="screen">
-   <param name="kv" value="0.2" />
-   <param name="kw" value="0.1" />
+   <param name="kv" value="0.4" />
+   <param name="kw" value="0.2" />
     </node>
     
  
